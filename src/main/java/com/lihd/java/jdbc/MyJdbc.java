@@ -12,11 +12,11 @@ public class MyJdbc {
 
         Class.forName("oracle.jdbc.OracleDriver");
 
-        String url = "jdbc:oracle:thin:@132.228.27.132:1521/css";
+        String url = "";
 
-        String user = "CSS_REPORT";
+        String user = "";
 
-        String password = "68m8NaV_yNTz";
+        String password = "";
 
         return DriverManager.getConnection(url, user, password);
 
