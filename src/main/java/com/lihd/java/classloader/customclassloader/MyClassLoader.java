@@ -24,7 +24,7 @@ public class MyClassLoader extends ClassLoader {
     private Set<String> useMyClassLoaderLoad;
 
 
-    private MyClassLoader(String swapPath, Set<String> useMyClassLoaderLoad) {
+    public MyClassLoader(String swapPath, Set<String> useMyClassLoaderLoad) {
         this.swapPath = swapPath;
         this.useMyClassLoaderLoad = useMyClassLoaderLoad;
     }
@@ -76,16 +76,20 @@ public class MyClassLoader extends ClassLoader {
             @Override
             public void run() {
                 String swapPath = MyClassLoader.class.getResource("").getPath() ;
-                String className = "com.lihd.java.classloader.Test";
+                String className = "com.lihd.java.classloader.customclassloader.Test";
 
                 //每次都实例化一个ClassLoader，这里传入swap路径，和需要特殊加载的类名
                 HashSet<String> hashSet = new HashSet<>();
                 hashSet.add(className);
                 MyClassLoader myClassLoader = new MyClassLoader(swapPath, hashSet);
+
+                System.out.println(myClassLoader.getParent());
+
                 try {
                     //使用自定义的ClassLoader加载类，并调用printVersion方法。
                     Object o = myClassLoader.loadClass(className).newInstance();
                     o.getClass().getMethod("swapTest").invoke(o);
+                    System.out.println(o.getClass().getClassLoader());
                 } catch (Exception ignored) {
 
                 }
