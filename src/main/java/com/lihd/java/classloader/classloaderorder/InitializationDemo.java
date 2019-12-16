@@ -1,4 +1,4 @@
-package com.lihd.java.classloader;
+package com.lihd.java.classloader.classloaderorder;
 
 public class InitializationDemo {
 

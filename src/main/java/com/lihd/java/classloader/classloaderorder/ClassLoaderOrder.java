@@ -1,4 +1,4 @@
-package com.lihd.java.classloader;
+package com.lihd.java.classloader.classloaderorder;
 
 /**
  *
@@ -10,13 +10,13 @@ public class ClassLoaderOrder {
     static int int2 = 0;
     int int3 = 1;
 
-    private ClassLoaderOrder(){
-        int1 ++;
-        int2 ++;
-        int3 ++;
+    private ClassLoaderOrder() {
+        int1++;
+        int2++;
+        int3++;
     }
 
-    public static ClassLoaderOrder getInstance(){
+    public static ClassLoaderOrder getInstance() {
         return classLoaderOrder;
     }
 

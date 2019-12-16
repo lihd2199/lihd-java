@@ -1,4 +1,4 @@
-package com.lihd.java.classloader;
+package com.lihd.java.classloader.classloaderorder;
 
 public class Book {
 
@@ -21,10 +21,11 @@ public class Book {
         System.out.println("price=" + price + ",amount=" + amount);
     }
 
-    public static void staticFunction() {
+    private static void staticFunction() {
         System.out.println("书的静态方法");
     }
 
-    int price = 110;
-    static int amount = 112;
+    private int price = 110;
+
+    private static int amount = 112;
 }
