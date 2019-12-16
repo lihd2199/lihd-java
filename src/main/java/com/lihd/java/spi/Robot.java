@@ -1,4 +1,4 @@
-package com.lihd.java.dubbo.spi;
+package com.lihd.java.spi;
 
 /**
  * @program: lihd-java

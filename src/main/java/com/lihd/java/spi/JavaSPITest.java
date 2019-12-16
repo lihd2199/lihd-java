@@ -1,4 +1,4 @@
-package com.lihd.java.dubbo.spi;
+package com.lihd.java.spi;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ public class JavaSPITest {
 
 
     @Test
-    public void sayHello() throws Exception {
+    public void sayHello() {
 
         ServiceLoader<Robot> serviceLoader = ServiceLoader.load(Robot.class);
 
