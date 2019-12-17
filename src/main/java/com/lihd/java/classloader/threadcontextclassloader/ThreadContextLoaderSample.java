@@ -8,17 +8,20 @@ package com.lihd.java.classloader.threadcontextclassloader;
  **/
 public class ThreadContextLoaderSample {
 
-    //用于线程上下文 指定某些class用特定的classloader  跳过双亲委派模型
+    //用于线程上下文 指定某些class用特定的classloader
 
-    public static void main(String[] args) throws Exception{
+    //在jdbc中 加载驱动类
+
+    public static void main(String[] args) {
 
         //指定 启动类加载器
-        Thread.currentThread().setContextClassLoader(ThreadContextLoaderSample.class.getClassLoader().getParent());
+        Thread.currentThread().setContextClassLoader(ThreadContextLoaderSample.class.getClassLoader());
 
-        String test = ThreadContextLoaderSample.class.getResource("/").getPath().concat("Test");
+        System.out.println(Thread.currentThread().getContextClassLoader());
 
-        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-
+        /*
+         *  在BootstrapClassLoader加载的类中通过ThreadContextClassLoader加载了应用程序的实现类
+         */
 
     }
 
