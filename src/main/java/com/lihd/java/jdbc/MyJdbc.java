@@ -10,7 +10,7 @@ public class MyJdbc {
 
     private static Connection getConnection() throws SQLException, ClassNotFoundException {
 
-        Class.forName("oracle.jdbc.OracleDriver");
+        Class.forName("com.mysql.jdbc.Driver ");
 
         String url = "";
 
@@ -26,12 +26,12 @@ public class MyJdbc {
     public static void main(String[] args) throws ClassNotFoundException {
 
 
-        String sql = " select * from VZX_ITV_BQ_ZW where 1=1 and ( ( VZX_ITV_BQ_ZW.产品ID < 200000000000000000000000000 and VZX_ITV_BQ_ZW.产品ID > 0 ) )  " ;
+        @SuppressWarnings({"SqlNoDataSourceInspection", "SqlDialectInspection"})
+        String sql = " select * from VZX_ITV_BQ_ZW where 1=1  " ;
 
 
         ResultSet rs = null;
         PreparedStatement ps = null;
-        List<Map<String, Object>> mapList = new ArrayList<>();
         int count = 0;
         Connection connection = null;
         try {
@@ -56,19 +56,19 @@ public class MyJdbc {
         if (resultSet != null) {
             try {
                 resultSet.close();
-            } catch (SQLException e) {
+            } catch (SQLException ignore) {
             }
         }
         if (stmt != null) {
             try {
                 stmt.close();
-            } catch (SQLException e) {
+            } catch (SQLException ignore) {
             }
         }
         if (connection != null) {
             try {
                 connection.close();
-            } catch (SQLException e) {
+            } catch (SQLException ignore) {
             }
         }
     }
