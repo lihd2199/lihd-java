@@ -75,7 +75,9 @@ public class MyClassLoader extends ClassLoader {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                String swapPath = MyClassLoader.class.getResource("").getPath() ;
+
+                String swapPath = MyClassLoader.class.getResource("/").getPath() ;
+
                 String className = "com.lihd.java.classloader.customclassloader.Test";
 
                 //每次都实例化一个ClassLoader，这里传入swap路径，和需要特殊加载的类名
@@ -83,13 +85,14 @@ public class MyClassLoader extends ClassLoader {
                 hashSet.add(className);
                 MyClassLoader myClassLoader = new MyClassLoader(swapPath, hashSet);
 
-                System.out.println(myClassLoader.getParent());
-
                 try {
                     //使用自定义的ClassLoader加载类，并调用printVersion方法。
                     Object o = myClassLoader.loadClass(className).newInstance();
                     o.getClass().getMethod("swapTest").invoke(o);
+
+                    //如果app找不到 而且是被my加载的就是my   如果在classpath中能找到就是app
                     System.out.println(o.getClass().getClassLoader());
+
                 } catch (Exception ignored) {
 
                 }
