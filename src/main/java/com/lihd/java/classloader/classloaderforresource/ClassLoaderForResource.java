@@ -1,5 +1,7 @@
 package com.lihd.java.classloader.classloaderforresource;
 
+import java.net.URL;
+
 /**
  * @program: lihd-java
  * @description:
@@ -10,9 +12,13 @@ public class ClassLoaderForResource {
 
     public static void main(String[] args) {
 
-        ClassLoader classLoader = ClassLoaderForResource.class.getClassLoader();
+        URL url1 = ClassLoaderForResource.class.getClassLoader().getResource("Test.class");
 
-        classLoader.getResource("application.xml");
+        URL url2 = ClassLoaderForResource.class.getResource("/Test.class");
+
+        System.out.println(url1);
+
+        System.out.println(url2);
 
 
     }
