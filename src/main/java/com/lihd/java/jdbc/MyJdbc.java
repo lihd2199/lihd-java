@@ -1,33 +1,33 @@
 package com.lihd.java.jdbc;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MyJdbc {
 
 
-    private static Connection getConnection() throws SQLException, ClassNotFoundException {
+    private static Connection getConnection() throws SQLException {
 
-        Class.forName("com.mysql.jdbc.Driver ");
+        String url = "jdbc:mysql://192.168.160.129:3306/lihd?useSSL=false";
 
-        String url = "";
+        String user = "root";
 
-        String user = "";
-
-        String password = "";
+        String password = "root";
 
         return DriverManager.getConnection(url, user, password);
 
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args)  {
 
 
         @SuppressWarnings({"SqlNoDataSourceInspection", "SqlDialectInspection"})
-        String sql = " select * from VZX_ITV_BQ_ZW where 1=1  " ;
+        String sql = " select * from runoob_tbl where 1=1  " ;
 
 
         ResultSet rs = null;
