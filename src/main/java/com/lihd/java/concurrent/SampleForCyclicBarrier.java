@@ -1,6 +1,5 @@
 package com.lihd.java.concurrent;
 
-import com.lihd.java.extend.C;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -36,15 +35,13 @@ class SampleForCyclicBarrier {
 
         CyclicBarrier cyclicBarrier = new CyclicBarrier(NUM_WORKERS, new AggregatorThread(partialResults,countDownLatch));
 
-        List<Thread> list = Stream.generate(() -> new Thread(new NumberCruncherThread(cyclicBarrier, partialResults), String.valueOf(System.currentTimeMillis()))).limit(NUM_WORKERS).collect(Collectors.toList());
+        List<Thread> list = Stream.generate(() -> new Thread(new NumberCruncherThread(cyclicBarrier, partialResults))).limit(NUM_WORKERS).collect(Collectors.toList());
 
         list.forEach(Thread::start);
 
         countDownLatch.await();
 
         System.out.println("number of waiting threads after the task ends： " + cyclicBarrier.getNumberWaiting());
-
-        System.out.println(cyclicBarrier.getParties());
 
 
     }
@@ -78,20 +75,20 @@ class SampleForCyclicBarrier {
             }
 
 
-            if(cyclicBarrier.getNumberWaiting() == 2){
+            if(cyclicBarrier.getNumberWaiting() == 1){
                 cyclicBarrier.reset();
             }
 
             partialResults.add(partialResult);
             try {
 
-                System.out.println(thisThreadName
-                        + " The number of thread already waiting." + cyclicBarrier.getParties());
 
                 System.out.println(thisThreadName
                         + " The number of thread already waiting." + cyclicBarrier.getNumberWaiting());
                 cyclicBarrier.await();
             } catch (InterruptedException | BrokenBarrierException e) {
+
+                System.out.println(Thread.currentThread().getName());
                 e.printStackTrace();
             }
 
