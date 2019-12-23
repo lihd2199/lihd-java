@@ -1,5 +1,6 @@
 package com.lihd.java.concurrent;
 
+import com.lihd.java.extend.C;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,15 +28,24 @@ class SampleForCyclicBarrier {
 
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
 
         List<List<Integer>> partialResults = Collections.synchronizedList(new ArrayList<>());
 
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(NUM_WORKERS, new AggregatorThread(partialResults));
+        CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        List<Thread> list = Stream.generate(() -> new Thread(new NumberCruncherThread(cyclicBarrier, partialResults),String.valueOf(System.currentTimeMillis()))).limit(NUM_WORKERS).collect(Collectors.toList());
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(NUM_WORKERS, new AggregatorThread(partialResults,countDownLatch));
+
+        List<Thread> list = Stream.generate(() -> new Thread(new NumberCruncherThread(cyclicBarrier, partialResults), String.valueOf(System.currentTimeMillis()))).limit(NUM_WORKERS).collect(Collectors.toList());
 
         list.forEach(Thread::start);
+
+        countDownLatch.await();
+
+        System.out.println("number of waiting threads after the task ends： " + cyclicBarrier.getNumberWaiting());
+
+        System.out.println(cyclicBarrier.getParties());
+
 
     }
 
@@ -59,7 +70,6 @@ class SampleForCyclicBarrier {
 
             List<Integer> partialResult = new ArrayList<>();
 
-            // Crunch some numbers and store the partial result
             for (int i = 0; i < NUM_PARTIAL_RESULTS; i++) {
                 Integer num = random.nextInt(10);
                 System.out.println(thisThreadName
@@ -67,13 +77,22 @@ class SampleForCyclicBarrier {
                 partialResult.add(num);
             }
 
+
+            if(cyclicBarrier.getNumberWaiting() == 2){
+                cyclicBarrier.reset();
+            }
+
             partialResults.add(partialResult);
             try {
-                System.out.println(thisThreadName
-                        + " waiting for others to reach barrier." + cyclicBarrier.getNumberWaiting());
-                cyclicBarrier.await();
-            } catch (InterruptedException | BrokenBarrierException ignore) {
 
+                System.out.println(thisThreadName
+                        + " The number of thread already waiting." + cyclicBarrier.getParties());
+
+                System.out.println(thisThreadName
+                        + " The number of thread already waiting." + cyclicBarrier.getNumberWaiting());
+                cyclicBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
             }
 
 
@@ -83,9 +102,12 @@ class SampleForCyclicBarrier {
 
     class AggregatorThread implements Runnable {
 
-        AggregatorThread(List<List<Integer>> partialResults) {
+        AggregatorThread(List<List<Integer>> partialResults, CountDownLatch countDownLatch) {
             this.partialResults = partialResults;
+            this.countDownLatch = countDownLatch;
         }
+
+        private CountDownLatch countDownLatch;
 
         private List<List<Integer>> partialResults;
 
@@ -102,12 +124,15 @@ class SampleForCyclicBarrier {
             for (List<Integer> threadResult : partialResults) {
                 System.out.print("Adding ");
                 for (Integer partialResult : threadResult) {
-                    System.out.print(partialResult + " ");
+                    System.out.print(partialResult+",");
                     sum += partialResult;
                 }
                 System.out.println();
             }
             System.out.println(thisThreadName + ": Final result = " + sum);
+
+            countDownLatch.countDown();
+
         }
     }
 
