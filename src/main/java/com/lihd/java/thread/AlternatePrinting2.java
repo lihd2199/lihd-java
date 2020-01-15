@@ -1,4 +1,4 @@
-package com.lihd.java.waitandnotify;
+package com.lihd.java.thread;
 
 
 /**
