@@ -1,5 +1,7 @@
 package com.lihd.java.waitandnotify;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @program: lihd-java
  * @description: sample for wait and notify
@@ -14,7 +16,8 @@ public class SampleForWaitAndNotify {
         SampleForWaitAndNotify sampleForWaitAndNotify = new SampleForWaitAndNotify();
         //sampleForWaitAndNotify.test1();
         //sampleForWaitAndNotify.test2();
-        sampleForWaitAndNotify.test3();
+        //sampleForWaitAndNotify.test3();
+        sampleForWaitAndNotify.test4();
 
     }
 
@@ -42,11 +45,19 @@ public class SampleForWaitAndNotify {
 
     private void test3() throws InterruptedException {
 
-
         synchronized (o) {
             o.wait();
         }
 
+    }
+
+    private ReentrantLock reentrantLock = new ReentrantLock();
+
+    //用condition
+    //error IllegalMonitorStateException
+    private void test4() throws InterruptedException {
+        reentrantLock.lock();
+        reentrantLock.wait();
     }
 
 
