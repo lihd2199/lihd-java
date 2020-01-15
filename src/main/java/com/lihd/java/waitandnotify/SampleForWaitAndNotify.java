@@ -16,8 +16,8 @@ public class SampleForWaitAndNotify {
         SampleForWaitAndNotify sampleForWaitAndNotify = new SampleForWaitAndNotify();
         //sampleForWaitAndNotify.test1();
         //sampleForWaitAndNotify.test2();
-        //sampleForWaitAndNotify.test3();
-        sampleForWaitAndNotify.test4();
+        sampleForWaitAndNotify.test3();
+        //sampleForWaitAndNotify.test4();
 
     }
 
