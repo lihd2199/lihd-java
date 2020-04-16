@@ -2,7 +2,10 @@ package com.lihd.java.concurrent;
 
 import org.junit.Test;
 
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  * @program: lihd-java
@@ -14,25 +17,40 @@ public class SampleForCopyOnWriteArrayList {
 
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
 
-        final CopyOnWriteArrayList<Integer> integers = new CopyOnWriteArrayList<>();
+        CopyOnWriteArrayList<Integer> integers = new CopyOnWriteArrayList<>();
 
         integers.add(1);
         integers.add(2);
         integers.add(3);
         integers.add(4);
 
+        final CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
 
-        new Thread(() -> integers.forEach(System.out::println)).start();
+        new Thread(() -> integers.forEach(e -> {
 
+            System.out.println(e);
+            try {
+                if (e == 3)
+                    cyclicBarrier.await();
+                    Thread.sleep(1000);
+            } catch (InterruptedException | BrokenBarrierException ex) {
+                ex.printStackTrace();
+            }
+        })).start();
 
         new Thread(() -> {
+            try {
+                cyclicBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
+            }
             final boolean add = integers.add(5);
             System.out.println(add);
         }).start();
 
-
+        new CountDownLatch(1).await();
 
 
     }
