@@ -18,6 +18,10 @@ interface Vehicle {
     static void blowHorn() {
         System.out.println("我是一静态方法!!!");
     }
+
+    static void test(){
+        System.out.println(1123233);
+    }
 }
 
 interface FourWheeler {
@@ -33,7 +37,6 @@ class Car implements Vehicle, FourWheeler {
         Vehicle.super.print();
         FourWheeler.super.print();
         Vehicle.blowHorn();
-        System.out.println("我是一辆汽车!");
     }
 
 }
