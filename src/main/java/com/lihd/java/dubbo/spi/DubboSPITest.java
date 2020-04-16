@@ -1,14 +1,21 @@
 package com.lihd.java.dubbo.spi;
 
+import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;
+import com.lihd.java.dubbo.adaptive.Car;
+import com.lihd.java.dubbo.adaptive.CarMaker;
+import com.lihd.java.dubbo.adaptive.RaceCarMaker;
+import com.lihd.java.dubbo.adaptive.Wheel;
+import com.lihd.java.dubbo.adaptive.WheelMaker;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -46,6 +53,34 @@ public class DubboSPITest {
         final Robot bumblebee = extensionLoader.getExtension("bumblebee");
 
         bumblebee.sayHello();
+
+    }
+
+
+    @Test
+    public void makeCar(){
+
+        ExtensionLoader<CarMaker> extensionLoader = ExtensionLoader.getExtensionLoader(CarMaker.class);
+
+        final CarMaker raceCarMaker = extensionLoader.getExtension("RaceCarMaker");
+
+        final Map<String, String> param = new HashMap<>();
+
+        param.put("wheel.maker","MichelinWheelMaker");
+
+        final URL dubbo = new URL("dubbo", "192.168.0.101", 20880, param);
+
+        final Car car = raceCarMaker.makeCar(dubbo);
+
+        System.out.println(car);
+
+        ExtensionLoader<WheelMaker> wheelMakerExtensionLoader = ExtensionLoader.getExtensionLoader(WheelMaker.class);
+
+        final WheelMaker wheelMaker = wheelMakerExtensionLoader.getAdaptiveExtension();
+
+        final Wheel wheel = wheelMaker.makeWheel(dubbo);
+
+        System.out.println(wheel);
 
     }
 
