@@ -3,6 +3,8 @@ package com.lihd.java.concurrent;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -45,13 +47,46 @@ public class SampleForCompletableFuture {
         future.whenComplete((v, e) -> {
             System.out.println(Thread.currentThread().getName());
             System.out.println(v);
-            System.out.println(e);
         });
 
 
         System.out.println(1);
 
         new CountDownLatch(1).await();
+
+    }
+
+
+    @Test
+    public void test2() {
+
+        List<CompletableFuture<Integer>> list = new ArrayList<>();
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+
+            int finalI = i;
+            CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+                try {
+                    Thread.sleep(1000* finalI);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName());
+                result.add(1000* finalI);
+                return null;
+            });
+            list.add(future);
+
+        }
+
+
+
+        final CompletableFuture[] completableFutures = list.toArray(new CompletableFuture[0]);
+        CompletableFuture.allOf(completableFutures).join();
+
+        System.out.println(result);
 
     }
 
