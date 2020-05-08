@@ -1,6 +1,7 @@
-package com.lihd.java.spi;
+package com.lihd.java.dubbo.spi;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 import java.util.ServiceLoader;
 

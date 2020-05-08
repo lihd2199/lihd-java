@@ -1,4 +1,6 @@
-package com.lihd.java.spi;
+package com.lihd.java.dubbo.spi;
+
+import com.alibaba.dubbo.common.extension.SPI;
 
 /**
  * @program: lihd-java
@@ -6,6 +8,7 @@ package com.lihd.java.spi;
  * @author: li_hd
  * @create: 2019-12-13 16:29
  **/
+@SPI
 public interface Robot {
 
 
