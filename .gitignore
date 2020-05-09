@@ -31,4 +31,4 @@ src/test
 #idea
 .idea
 
-lihd-java.imi
+*.iml
