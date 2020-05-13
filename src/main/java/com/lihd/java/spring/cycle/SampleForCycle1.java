@@ -1,5 +1,6 @@
-package com.lihd.java.spring;
+package com.lihd.java.spring.cycle;
 
+import com.lihd.java.annotation.MyAnnotation;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
  * @create: 2020-05-12 20:32
  **/
 @Service
+@MyAnnotation(test = "lihd")
 public class SampleForCycle1 {
 
     @Resource

@@ -1,4 +1,4 @@
-package com.lihd.java.spring;
+package com.lihd.java.spring.cycle;
 
 import lombok.Data;
 import org.springframework.stereotype.Service;

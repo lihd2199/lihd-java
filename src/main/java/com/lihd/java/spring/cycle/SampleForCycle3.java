@@ -1,4 +1,4 @@
-package com.lihd.java.spring;
+package com.lihd.java.spring.cycle;
 
 import org.springframework.stereotype.Service;
 
