@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @create: 2020-03-18 19:51
  **/
 @Service
-public class SampleForBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+public class SampleForBeanFactoryPostProcessor implements BeanFactoryPostProcessor  {
 
 
     @Override
