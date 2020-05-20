@@ -25,9 +25,6 @@ hs_err_pid*
 #编译的文件
 target
 
-# test 文件
-src/test
-
 #idea
 .idea
 

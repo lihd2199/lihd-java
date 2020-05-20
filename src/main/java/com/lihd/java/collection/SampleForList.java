@@ -19,37 +19,47 @@ public class SampleForList {
     @Test
     public void test() {
 
-        Integer a = Integer.valueOf(122);
 
-        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-        List<Integer> integers = new ArrayList<>(list);
+        List<String> integers = new ArrayList<>();
 
-        for (int i = 0; i < integers.size(); i++) {
-            if (integers.get(i) == 5) {
-                integers.remove(i);
-                integers.remove(integers.get(i));
-            }
-        }
+        integers.add("1");
+        integers.add("2");
+        integers.add("3");
+        integers.add("4");
 
-        System.out.println(integers);
+//        for (int i = 0; i < integers.size(); i++) {
+//            if (integers.get(i) == 5) {
+//                integers.remove(i);
+//                integers.remove(integers.get(i));
+//            }
+//        }
 
-        Iterator<Integer> var5 = integers.iterator();
+//
+//        for (String integer : integers) {
+//            if("4".equals(integer)){
+//                integers.remove("4");
+//            }
+//        }
+
+
+
+        Iterator<String> var5 = integers.iterator();
 
         while (var5.hasNext()) {
-            Integer integer = var5.next();
-            if (integer == 7) {
+            String integer = var5.next();
+            if ("2".equals(integer)) {
                 var5.remove();
             }
         }
 
-
-        for (Integer integer : integers) {
-            if (integer == 8) {
-                integers.remove(integer);
-                integers.add(1233);
-            }
-        }
+//
+//        for (Integer integer : integers) {
+//            if (integer == 8) {
+//                integers.remove(integer);
+//                integers.add(1233);
+//            }
+//        }
 
 
     }
