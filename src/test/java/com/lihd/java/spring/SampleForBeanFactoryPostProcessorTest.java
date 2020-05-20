@@ -1,4 +1,4 @@
-package com.lihd.java;
+package com.lihd.java.spring;
 
 import com.lihd.java.spring.cycle.SampleForCycle1;
 import org.junit.Test;
