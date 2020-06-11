@@ -1,8 +1,5 @@
 package com.lihd.java.reference;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import java.lang.ref.WeakReference;
 
 /**
@@ -11,35 +8,29 @@ import java.lang.ref.WeakReference;
  * @author: li_hd
  * @create: 2020-05-13 11:08
  **/
-public class SampleForWeakReference {
+public class SampleForWeakReference extends WeakReference<Apple> {
 
-    public void sample() {
+    public SampleForWeakReference(Apple referent) {
 
-        final Product product = new Product("lihd");
+        super(referent);
 
-        final WeakReference<Product> weakReference = new WeakReference<>(product);
+    }
 
-        int i = 0;
-        while (true) {
-            if (weakReference.get() != null) {
-                i++;
-                System.out.println("Object is alive for " + i + " loops - " + weakReference);
-            } else {
-                System.out.println("Object has been collected.");
-                break;
-            }
+
+    public void sample() throws InterruptedException {
+
+        System.out.println(this.get());
+
+        System.gc();
+
+        Thread.sleep(5000);
+
+        if (this.get() == null) {
+            System.out.println("clear apple ");
         }
 
     }
 
-
-    @Data
-    @AllArgsConstructor
-    private static class Product {
-
-        private String name;
-
-    }
-
-
 }
+
+
