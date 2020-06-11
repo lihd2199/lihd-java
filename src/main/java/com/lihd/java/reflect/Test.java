@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  **/
 public class Test {
 
-    public static void main(String[] args) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static void main(String[] args) throws IllegalAccessException {
 
         Demo demo = new Demo();
         demo.setName("lihd");

@@ -19,7 +19,7 @@ public class LambdaExample {
         // 没有大括号及返回语句
         MathOperation division = (int a, int b) -> a / b;
 
-        System.out.println("10 + 5 = " + tester.operate(10, 5, addition));
+        System.out.println("10 + 5 = " + addition.operation(1, 10));
         System.out.println("10 - 5 = " + tester.operate(10, 5, subtraction));
         System.out.println("10 x 5 = " + tester.operate(10, 5, multiplication));
         System.out.println("10 / 5 = " + tester.operate(10, 5, division));
