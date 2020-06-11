@@ -21,7 +21,7 @@ public class ExecutorsTest implements Executor{
                 Integer.MAX_VALUE,
                 60L,
                 TimeUnit.SECONDS,
-                new SynchronousQueue<>(),
+                new LinkedBlockingDeque<>(100),
                 new MyThreadFactory(),
                 new ThreadPoolExecutor.CallerRunsPolicy());
     }
