@@ -23,7 +23,8 @@ public class SampleForVolatile {
         Thread thread2 = new Thread(() -> {
             System.out.println("开始循环了");
             while (isOk) {
-
+//                加上这句话，可跳出循环
+//                System.out.println(Thread.currentThread().getName() + isOk);
             }
             System.out.println("跳出循环了");
         });
