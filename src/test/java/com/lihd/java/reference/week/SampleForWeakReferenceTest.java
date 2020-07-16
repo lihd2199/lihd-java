@@ -1,5 +1,7 @@
-package com.lihd.java.reference;
+package com.lihd.java.reference.week;
 
+import com.lihd.java.reference.week.Apple;
+import com.lihd.java.reference.week.SampleForWeakReference;
 import org.junit.Assert;
 import org.junit.Test;
 

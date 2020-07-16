@@ -1,4 +1,4 @@
-package com.lihd.java.reference;
+package com.lihd.java.reference.week;
 
 /**
  * @program: lihd-java
