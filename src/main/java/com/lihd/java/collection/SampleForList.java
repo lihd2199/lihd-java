@@ -11,6 +11,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @program: lihd-java
@@ -45,7 +46,6 @@ public class SampleForList {
 //        }
 
 
-
         Iterator<String> var5 = integers.iterator();
 
         while (var5.hasNext()) {
@@ -67,13 +67,13 @@ public class SampleForList {
     }
 
 
-    CopyOnWriteArrayList<Double> integers = new CopyOnWriteArrayList<>();
+    volatile CopyOnWriteArrayList<Double> integers = new CopyOnWriteArrayList<>();
 
     @Test
     public void test_copyOnWrite() throws InterruptedException {
 
         CountDownLatch countDownLatch = new CountDownLatch(10);
-        CyclicBarrier cyclicBarrier =  new CyclicBarrier(10);
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
 
 
         for (int i = 0; i < 10; i++) {
@@ -85,7 +85,7 @@ public class SampleForList {
                     }
                 } catch (InterruptedException | BrokenBarrierException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     countDownLatch.countDown();
                 }
             }).start();
@@ -95,9 +95,7 @@ public class SampleForList {
         System.out.println(integers.size());
 
 
-
     }
-
 
 
 }
