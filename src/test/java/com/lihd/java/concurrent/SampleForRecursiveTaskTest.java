@@ -3,7 +3,9 @@ package com.lihd.java.concurrent;
 import com.lihd.java.concurrent.forkjoin.SampleForRecursiveTask;
 import org.junit.Test;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 
 /**
  * @program: lihd-java
@@ -15,17 +17,17 @@ public class SampleForRecursiveTaskTest {
 
 
     @Test
-    public void test(){
+    public void test() throws ExecutionException, InterruptedException {
 
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
 
-        final SampleForRecursiveTask sampleForRecursiveTask = new SampleForRecursiveTask("dahsiuhfdesiufhgisdgfysgfiusgfseugfys");
+        SampleForRecursiveTask countTask = new SampleForRecursiveTask(1, 100);
 
-        forkJoinPool.execute(sampleForRecursiveTask);
+        ForkJoinTask<Integer> result = forkJoinPool.submit(countTask);
 
-        sampleForRecursiveTask.join();
+        System.out.println("result: " + result.get());
 
-
+        forkJoinPool.shutdown();
 
     }
 

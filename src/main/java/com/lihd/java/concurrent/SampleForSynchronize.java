@@ -7,7 +7,7 @@ import com.lihd.java.concurrent.executors.ExecutorsTest;
  * @author lihd
  * @desc synchronize 应用
  */
-public class Synchronize {
+public class SampleForSynchronize {
 
 
     public static void main(String[] args) {

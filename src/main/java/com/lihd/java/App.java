@@ -1,55 +1,59 @@
 package com.lihd.java;
 
 
-import lombok.Getter;
+import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 
 public class App {
 
+    @Test
+    public void zuse() throws InterruptedException {
 
-    public static void main(String[] args) {
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        final App app = new App();
-        int a = 1;
-        Double b = 1.0;
-        List<Integer> c = new ArrayList<>();
-        String d = "1";
-        final Inner e = new Inner();
-        e.name = "1";
-        int[] f = new int[2];
-        AtomicInteger g = new AtomicInteger(0);
+        final Thread thread = new Thread(() -> {
+            try {
+                countDownLatch.countDown();
+                System.out.println("开始阻塞");
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                System.out.println("InterruptedException");
+                e.printStackTrace();
+            }
+        });
 
-        app.test(a, b, c, d, e, f, g);
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c.size());
-        System.out.println(d);
-        System.out.println(e.name);
-        System.out.println(f[0]);
-        System.out.println(g.get());
+        thread.start();
+        countDownLatch.await();
+        thread.interrupt();
+
+        new CountDownLatch(1).await();
+
+    }
+
+    @Test
+    public void notzuse() throws InterruptedException {
+
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+        final Thread thread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("正常执行");
+                countDownLatch.countDown();
+            }
+            System.out.println("跳出循环");
+        });
+
+        thread.start();
+        countDownLatch.await();
+        thread.interrupt();
+
+        new CountDownLatch(1).await();
+
     }
 
 
-    public void test(int a, Double b, List<Integer> c, String d, Inner e, int[] f, AtomicInteger g) {
-        a = 2;
-        b = 2.0;
-        c.add(2);
-        d = "2";
-        e.name = "2";
-        f[0] = 1;
-        g.getAndIncrement();
-    }
 
-    static class Inner {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-    }
 
 
 }

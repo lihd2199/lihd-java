@@ -1,4 +1,4 @@
-package com.lihd.java.concurrent.colloection;
+package com.lihd.java.concurrent.collection;
 
 import java.util.concurrent.ConcurrentHashMap;
 
