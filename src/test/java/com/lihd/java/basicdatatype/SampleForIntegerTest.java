@@ -1,5 +1,6 @@
 package com.lihd.java.basicdatatype;
 
+import com.lihd.java.basicdatatype.integer.SampleForInteger;
 import org.junit.Test;
 
 /**
