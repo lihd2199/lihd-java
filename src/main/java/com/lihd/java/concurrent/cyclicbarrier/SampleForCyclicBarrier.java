@@ -34,7 +34,7 @@ class SampleForCyclicBarrier {
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(NUM_WORKERS, new AggregatorThread(partialResults,countDownLatch));
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(NUM_WORKERS, new AggregatorThread(partialResults, countDownLatch));
 
         List<Thread> list = Stream.generate(() -> new Thread(new NumberCruncherThread(cyclicBarrier, partialResults))).limit(NUM_WORKERS).collect(Collectors.toList());
 
@@ -76,7 +76,7 @@ class SampleForCyclicBarrier {
             }
 
 
-            if(cyclicBarrier.getNumberWaiting() == 1){
+            if (cyclicBarrier.getNumberWaiting() == 1) {
                 cyclicBarrier.reset();
             }
 
@@ -122,7 +122,7 @@ class SampleForCyclicBarrier {
             for (List<Integer> threadResult : partialResults) {
                 System.out.print("Adding ");
                 for (Integer partialResult : threadResult) {
-                    System.out.print(partialResult+",");
+                    System.out.print(partialResult + ",");
                     sum += partialResult;
                 }
                 System.out.println();
