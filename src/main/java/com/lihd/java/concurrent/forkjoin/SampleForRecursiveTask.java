@@ -1,5 +1,8 @@
 package com.lihd.java.concurrent.forkjoin;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
 /**
@@ -7,6 +10,16 @@ import java.util.concurrent.RecursiveTask;
  * @date: 2020-09-24 13:44
  **/
 public class SampleForRecursiveTask extends RecursiveTask<Integer> {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+
+        SampleForRecursiveTask task = new SampleForRecursiveTask(10,10000);
+        ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
+        ForkJoinTask<Integer> forkJoinTask = forkJoinPool.submit(task);
+        System.out.println(forkJoinTask.get());
+
+    }
+
 
     private final int start;
 
