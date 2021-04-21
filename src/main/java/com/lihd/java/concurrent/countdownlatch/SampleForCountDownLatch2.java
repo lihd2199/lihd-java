@@ -22,8 +22,8 @@ public class SampleForCountDownLatch2 {
 
         }
 
-        countDownLatch.await();
-        countDownLatch.await();
+        new CountDownLatch(1).await();
+
         System.out.println(Thread.currentThread().getName() + "完成");
 
     }
