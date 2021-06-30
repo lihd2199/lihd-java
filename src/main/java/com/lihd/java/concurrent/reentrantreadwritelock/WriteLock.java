@@ -4,6 +4,7 @@ import com.lihd.java.concurrent.executors.ExecutorsTest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -12,58 +13,79 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class WriteLock {
 
-    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-
-    private Map map = new HashMap();
+    private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public static void main(String[] args) throws InterruptedException {
 
-        WriteLock writeLock = new WriteLock();
-        Runnable runnable1 = writeLock::read;
-        for(int i=0;i<3;i++){
-            int integer = i;
-            Runnable runnable2 = () -> writeLock.write(integer);
-            ExecutorsTest.getInstance().execute(runnable2);
-            Thread.sleep(1000);
-            ExecutorsTest.getInstance().execute(runnable1);
-        }
-        ExecutorsTest.getInstance().shutdown();
+        readAndRead();
+//        readAndWrite();
+//        writeAndRead();
+//        writeAndWrite();
 
     }
 
+    public static void readAndRead() throws InterruptedException {
+        read();
+        Thread.sleep(1000L);
+        read();
+    }
 
+    public static void readAndWrite() throws InterruptedException {
+        read();
+        Thread.sleep(1000L);
+        write();
+    }
 
+    public static void writeAndRead() throws InterruptedException {
+        write();
+        Thread.sleep(1000L);
+        read();
+    }
 
-    private void read(){
-
-        lock.readLock().lock();
-        try{
-            System.out.println(Thread.currentThread().getName()+"-获取读锁!");
-            System.out.println(map.get("abc"));
-        }finally {
-            System.out.println(Thread.currentThread().getName()+"-释放读锁!");
-            lock.readLock().unlock();
-        }
-
+    public static void writeAndWrite() throws InterruptedException {
+        write();
+        Thread.sleep(1000L);
+        write();
     }
 
 
-    private void write(Integer integer){
+    public static void read() {
 
-        lock.writeLock().lock();
-        try{
-            System.out.println(Thread.currentThread().getName()+"-获取写锁!");
-            Thread.sleep(2000);
-            map.put("abc",integer);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println(Thread.currentThread().getName()+"-释放写锁!");
-            lock.writeLock().unlock();
-        }
+        new Thread(() -> {
+            try {
+                lock.readLock().lock();
+                System.out.println(Thread.currentThread().getName() + "获取读锁!");
+                new CountDownLatch(1).await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.readLock().unlock();
+            }
 
+        }).start();
+    }
+
+    public static void write() {
+
+        new Thread(() -> {
+            ReentrantReadWriteLock.WriteLock writeLock = lock.writeLock();
+            try {
+                writeLock.lock();
+                System.out.println(Thread.currentThread().getName() + "获取读锁!");
+                new CountDownLatch(1).await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                writeLock.unlock();
+            }
+
+        }).start();
     }
 
 
 
 }
+
+
+
+

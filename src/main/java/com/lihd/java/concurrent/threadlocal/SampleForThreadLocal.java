@@ -17,7 +17,7 @@ import java.util.concurrent.CyclicBarrier;
  **/
 public class SampleForThreadLocal {
 
-    private ThreadLocal<People> threadLocal = new ThreadLocal<>();
+    private final ThreadLocal<People> threadLocal = new ThreadLocal<>();
 
     @Data
     @AllArgsConstructor
@@ -49,7 +49,7 @@ public class SampleForThreadLocal {
                     System.out.println(Thread.currentThread().getName() + threadLocal.get());
                 } catch (InterruptedException | BrokenBarrierException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     countDownLatch.countDown();
                 }
             }).start();
@@ -61,10 +61,8 @@ public class SampleForThreadLocal {
     }
 
 
-
-
     @Test
-    public void testWithInitial(){
+    public void testWithInitial() {
 
         final ThreadLocal<People> peopleThreadLocal = ThreadLocal.withInitial(() -> new People(1, "122"));
 
